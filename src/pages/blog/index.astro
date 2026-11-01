@@ -55,32 +55,36 @@ const categories = Array.from(new Set(posts.map((post) => post.data.category)));
       {!otherPosts.length && featuredPost && <ArticleCard post={featuredPost} />}
     </div>
     <p class="no-results" data-article-empty hidden>No articles match that search. Try a different phrase or topic.</p>
-    <script>
-      const search = document.querySelector('[data-article-search]');
-      const cards = Array.from(document.querySelectorAll('[data-article-filter-card]'));
-      const count = document.querySelector('[data-article-count]');
-      const filters = Array.from(document.querySelectorAll('[data-category-filter]'));
-      const empty = document.querySelector('[data-article-empty]');
-      let selectedCategory = '';
-      const updateArticles = () => {
-        const term = (search.value || '').trim().toLowerCase();
-        const shown = cards.filter((card) => {
-          const match = (!term || card.dataset.searchText.includes(term)) &&
-            (!selectedCategory || card.dataset.category === selectedCategory);
-          card.hidden = !match;
-          return match;
-        });
-        count.textContent = shown.length + (shown.length === 1 ? ' article' : ' articles');
-        empty.hidden = shown.length > 0;
-      };
-      search.addEventListener('input', updateArticles);
-      filters.forEach((button) => button.addEventListener('click', () => {
-        selectedCategory = button.dataset.categoryFilter;
-        filters.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
-        filters.forEach((item) => item.classList.toggle('is-active', item === button));
+    <script lang="ts">
+      const search = document.querySelector<HTMLInputElement>('[data-article-search]');
+      const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-article-filter-card]'));
+      const count = document.querySelector<HTMLElement>('[data-article-count]');
+      const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-category-filter]'));
+      const empty = document.querySelector<HTMLElement>('[data-article-empty]');
+
+      if (search && count && empty) {
+        let selectedCategory = '';
+        const updateArticles = () => {
+          const term = search.value.trim().toLowerCase();
+          const shown = cards.filter((card) => {
+            const match = (!term || (card.dataset.searchText || '').includes(term)) &&
+              (!selectedCategory || card.dataset.category === selectedCategory);
+            card.hidden = !match;
+            return match;
+          });
+          count.textContent = shown.length + (shown.length === 1 ? ' article' : ' articles');
+          empty.hidden = shown.length > 0;
+        };
+
+        search.addEventListener('input', updateArticles);
+        filters.forEach((button) => button.addEventListener('click', () => {
+          selectedCategory = button.dataset.categoryFilter || '';
+          filters.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
+          filters.forEach((item) => item.classList.toggle('is-active', item === button));
+          updateArticles();
+        }));
         updateArticles();
-      }));
-      updateArticles();
+      }
     </script>
   </div>
 

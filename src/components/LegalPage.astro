@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
+interface PolicySection { heading: string; paragraphs?: string[]; bullets?: string[]; }
+interface Props { title: string; description: string; reviewed?: boolean; sections?: PolicySection[]; }
 const { title, description, reviewed = false, sections = [] } = Astro.props;
 ---
 <BaseLayout title={title} description={description} noindex={!reviewed}>

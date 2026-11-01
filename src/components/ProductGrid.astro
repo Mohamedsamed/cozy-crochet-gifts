@@ -1,5 +1,7 @@
 ---
 import ProductCard from './ProductCard.astro';
+import type { Category, Product } from '../lib/store';
+interface Props { products: Product[]; categories?: Category[]; searchable?: boolean; }
 const { products, categories = [], searchable = false } = Astro.props;
 ---
 {searchable && products.length > 0 && (

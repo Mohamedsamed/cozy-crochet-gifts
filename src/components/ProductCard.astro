@@ -1,6 +1,8 @@
 ---
 import { ArrowUpRight } from '@lucide/astro';
 import { formatPrice } from '../lib/store';
+import type { Product } from '../lib/store';
+interface Props { product: Product; }
 const { product } = Astro.props;
 const image = product.images[0];
 ---

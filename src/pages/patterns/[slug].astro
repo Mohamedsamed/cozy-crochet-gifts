@@ -8,6 +8,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import { activeCategories } from '../../lib/store';
 import { siteConfig } from '../../config/site';
 
+interface Props { category: (typeof activeCategories)[number]; }
 const allPosts = (await getCollection('blog')).filter((post) => !post.data.draft);
 export function getStaticPaths() {
   return activeCategories.map((category) => ({
@@ -52,7 +53,7 @@ const schema = siteConfig.publicSiteUrl
             <span class="category-card-shade"></span>
             <span class="category-card-copy"><span class="eyebrow">{item.products.length} patterns</span><strong>{item.title}</strong><span class="text-link">Explore <ArrowRight size={15} aria-hidden="true" /></span></span>
           </a>
-        )}</div>
+        ))}</div>
       </div>
     </section>
   )}

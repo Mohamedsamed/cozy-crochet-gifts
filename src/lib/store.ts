@@ -11,7 +11,6 @@ const ImageSchema = z.object({
 });
 
 const gumroadUrl = z
-  .string()
   .url()
   .refine((value) => {
     const url = new URL(value);
@@ -52,40 +51,40 @@ const ProductSchema = z
   })
   .superRefine((product, context) => {
     if (product.published && !product.publishedAt) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['publishedAt'], message: 'A published product needs its real publication date.' });
+      context.addIssue({ code: 'custom', path: ['publishedAt'], message: 'A published product needs its real publication date.' });
     }
     if (product.published && !product.fileFormat) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['fileFormat'], message: 'Set the verified file format before publishing.' });
+      context.addIssue({ code: 'custom', path: ['fileFormat'], message: 'Set the verified file format before publishing.' });
     }
     if (product.published && (!product.includedFiles || product.includedFiles.length === 0)) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['includedFiles'], message: 'List the exact files included before publishing.' });
+      context.addIssue({ code: 'custom', path: ['includedFiles'], message: 'List the exact files included before publishing.' });
     }
     if (product.published && !product.gumroadUrl) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['gumroadUrl'],
         message: 'A published product needs a real Gumroad URL.',
       });
     }
     if (product.compareAtPrice !== undefined && !product.discountEvidence) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['discountEvidence'], message: 'Record the genuine basis for an original-price comparison.' });
+      context.addIssue({ code: 'custom', path: ['discountEvidence'], message: 'Record the genuine basis for an original-price comparison.' });
     }
     if (
       product.compareAtPrice !== undefined &&
       product.compareAtPrice <= product.price
     ) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['compareAtPrice'],
         message: 'An original price must be higher than the current price.',
       });
     }
     if (product.badge && !product.badgeReason) {
-      context.addIssue({ code: z.ZodIssueCode.custom, path: ['badgeReason'], message: 'Record the factual reason for this product badge.' });
+      context.addIssue({ code: 'custom', path: ['badgeReason'], message: 'Record the factual reason for this product badge.' });
     }
     if (product.badge === 'bestseller' && !product.published) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['badge'],
         message: 'A badge can only be used on a published product.',
       });
@@ -119,7 +118,7 @@ const BundleSchema = z
   .superRefine((bundle, context) => {
     if (bundle.published && !bundle.gumroadUrl) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         path: ['gumroadUrl'],
         message: 'A published bundle needs a real Gumroad URL.',
       });
@@ -129,6 +128,8 @@ const BundleSchema = z
 export const products = z.array(ProductSchema).parse(productsJson);
 export const categories = z.array(CategorySchema).parse(categoriesJson);
 export const bundles = z.array(BundleSchema).parse(bundlesJson);
+export type Product = (typeof products)[number];
+export type Category = (typeof categories)[number];
 
 export const publishedProducts = products.filter(
   (product) => product.published && Boolean(product.gumroadUrl),
