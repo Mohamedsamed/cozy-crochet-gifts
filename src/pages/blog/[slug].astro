@@ -12,8 +12,11 @@ const allPosts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-export function getStaticPaths() {
-  return allPosts.map((post) => ({
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog'))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
   }));
