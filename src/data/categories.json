@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "amigurumi",
+    "title": "Amigurumi Patterns",
+    "navLabel": "Amigurumi",
+    "description": "Crochet ideas for soft characters and small keepsake makes.",
+    "intro": "Explore amigurumi crochet patterns with clear project details and room to make each piece your own.",
+    "relatedArticles": ["choosing-a-crochet-gift-pattern"]
+  },
+  {
+    "slug": "crochet-gifts",
+    "title": "Crochet Gift Ideas",
+    "navLabel": "Crochet Gifts",
+    "description": "Thoughtful crochet projects for handmade gifting.",
+    "intro": "Find a crochet gift pattern that suits the person, the occasion, and the time you have to make it.",
+    "relatedArticles": ["choosing-a-crochet-gift-pattern"]
+  },
+  {
+    "slug": "beginner",
+    "title": "Beginner Crochet Patterns",
+    "navLabel": "Beginner",
+    "description": "Welcoming projects for makers building their crochet skills.",
+    "intro": "Browse beginner crochet patterns with the skill information and materials listed before you start.",
+    "relatedArticles": ["read-a-crochet-pattern"]
+  },
+  {
+    "slug": "animals",
+    "title": "Crochet Animal Patterns",
+    "navLabel": "Animals",
+    "description": "Animal-inspired crochet projects for play and gifting.",
+    "intro": "Discover animal crochet patterns and check each listing for finished size, materials, and skill requirements.",
+    "relatedArticles": ["choosing-a-crochet-gift-pattern"]
+  },
+  {
+    "slug": "seasonal",
+    "title": "Seasonal Crochet Patterns",
+    "navLabel": "Seasonal",
+    "description": "Crochet makes for holidays, celebrations, and changing seasons.",
+    "intro": "Explore seasonal crochet projects and plan ahead using the time and materials noted in each pattern.",
+    "relatedArticles": ["choosing-a-crochet-gift-pattern"]
+  },
+  {
+    "slug": "bundles",
+    "title": "Crochet Pattern Bundles",
+    "navLabel": "Bundles",
+    "description": "Curated groups of crochet patterns in one digital collection.",
+    "intro": "Compare the patterns included in each bundle before visiting its Gumroad listing.",
+    "relatedArticles": ["choosing-a-crochet-gift-pattern"]
+  }
+]

@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowRight } from '@lucide/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { activeCategories } from '../../lib/store';
+import { siteConfig } from '../../config/site';
+
+const allPosts = (await getCollection('blog')).filter((post) => !post.data.draft);
+export function getStaticPaths() {
+  return activeCategories.map((category) => ({
+    params: { slug: category.slug },
+    props: { category },
+  }));
+}
+const { category } = Astro.props;
+const relatedCategories = activeCategories.filter((item) => item.slug !== category.slug).slice(0, 3);
+const relatedPosts = category.relatedArticles
+  .map((id) => allPosts.find((post) => post.id === id))
+  .filter((post) => post !== undefined)
+  .slice(0, 2);
+const schema = siteConfig.publicSiteUrl
+  ? [{
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: category.title,
+      description: category.description,
+      url: new URL('/patterns/' + category.slug + '/', siteConfig.publicSiteUrl).toString(),
+    }]
+  : [];
+---
+<BaseLayout title={category.title} description={category.description} image={category.image?.src || category.products[0].images[0].src} imageAlt={category.image?.alt || category.products[0].images[0].alt} schemas={schema}>
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Shop', href: '/shop/' }, { label: category.title }]} />
+    <header class="page-heading">
+      <p class="eyebrow">Crochet pattern collection</p>
+      <h1>{category.title}</h1>
+      <p>{category.intro}</p>
+    </header>
+    <ProductGrid products={category.products} />
+  </div>
+
+  {relatedCategories.length > 0 && (
+    <section class="section section-soft">
+      <div class="page-shell">
+        <div class="section-heading"><div><p class="eyebrow">Keep exploring</p><h2>Related collections</h2></div></div>
+        <div class="category-grid">{relatedCategories.map((item) => (
+          <a class="category-card" href={'/patterns/' + item.slug + '/'}>
+            <img src={item.image?.src || item.products[0].images[0].src} alt={item.image?.alt || item.products[0].images[0].alt} width={item.image?.width || item.products[0].images[0].width} height={item.image?.height || item.products[0].images[0].height} loading="lazy" decoding="async" />
+            <span class="category-card-shade"></span>
+            <span class="category-card-copy"><span class="eyebrow">{item.products.length} patterns</span><strong>{item.title}</strong><span class="text-link">Explore <ArrowRight size={15} aria-hidden="true" /></span></span>
+          </a>
+        )}</div>
+      </div>
+    </section>
+  )}
+
+  {relatedPosts.length > 0 && (
+    <section class="section">
+      <div class="page-shell">
+        <div class="section-heading"><div><p class="eyebrow">Helpful reading</p><h2>Ideas for your next make.</h2></div></div>
+        <div class="article-grid">{relatedPosts.map((post) => <ArticleCard post={post} />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

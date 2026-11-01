@@ -1,0 +1,10 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Pattern information', paragraphs: ['Product information is provided for the individual crochet pattern listed. Confirm skill level, materials, file contents, language, and dimensions on that product’s listing before purchase.'] },
+  { heading: 'Third-party checkout', paragraphs: ['Gumroad provides the checkout and digital delivery experience for products linked from the site. Its checkout and privacy terms apply to the parts of the purchase it operates.'] },
+  { heading: 'Project results', paragraphs: ['Finished appearance, dimensions, and time required can vary with materials, tension, and individual technique. Publish only project-specific guidance that is supported by the pattern instructions.'] },
+  { heading: 'External links', paragraphs: ['Identify the kinds of external links used on the site and explain that their content and terms are managed by their respective providers.'] },
+];
+---
+<LegalPage title="Disclaimer" description="Editable template for clarifying pattern information, external checkout, and project variation." sections={sections} />

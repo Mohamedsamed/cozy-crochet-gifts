@@ -1,0 +1,11 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Each pattern has its own license', paragraphs: ['A pattern license controls how that specific digital pattern may be used. Read the license shown with the Gumroad listing and in the included files. Do not assume that a purchase grants commercial rights.'] },
+  { heading: 'Personal use', paragraphs: ['Add the exact personal-use permission granted for each pattern. State whether customers may make finished items for themselves or as gifts, if that permission is actually granted.'] },
+  { heading: 'Selling finished handmade items', paragraphs: ['State clearly whether customers may sell items they make from a particular pattern. If commercial finished-item sales are allowed, include any conditions such as attribution or quantity limits only when those are part of the actual license.'] },
+  { heading: 'Digital pattern files', paragraphs: ['State the rules for copying, sharing, uploading, translating, modifying, or redistributing the PDF and its other digital files. Do not imply rights that the pattern’s creator has not granted.'] },
+  { heading: 'Product-specific permission', paragraphs: ['Add a clear contact route for license questions and identify the applicable license version or date for each product.'] },
+];
+---
+<LegalPage title="Pattern License" description="Editable template that distinguishes personal use, finished handmade-item sales, and redistribution of pattern files." sections={sections} />

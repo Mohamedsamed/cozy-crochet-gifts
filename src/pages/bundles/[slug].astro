@@ -1,0 +1,53 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import { getBundleProducts, publishedBundles, formatPrice } from '../../lib/store';
+import { siteConfig } from '../../config/site';
+
+export function getStaticPaths() {
+  return publishedBundles.map((bundle) => ({
+    params: { slug: bundle.slug },
+    props: { bundle },
+  }));
+}
+const { bundle } = Astro.props;
+const products = getBundleProducts(bundle.id);
+const schema = siteConfig.publicSiteUrl ? [{
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: bundle.name,
+  description: bundle.description,
+  image: new URL(bundle.image.src, siteConfig.publicSiteUrl).toString(),
+  offers: {
+    '@type': 'Offer',
+    price: bundle.price.toFixed(2),
+    priceCurrency: bundle.currency,
+    url: bundle.gumroadUrl,
+  },
+}] : [];
+---
+<BaseLayout title={bundle.name} description={bundle.description} image={bundle.image.src} imageAlt={bundle.image.alt} type="product" includeGumroad={true} schemas={schema}>
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Bundles', href: '/bundles/' }, { label: bundle.name }]} />
+    <div class="bundle-card" style="margin: 35px 0">
+      <img src={bundle.image.src} alt={bundle.image.alt} width={bundle.image.width} height={bundle.image.height} fetchpriority="high" />
+      <div class="bundle-card-copy">
+        <p class="eyebrow">A curated digital collection</p>
+        <h1 style="font-size: clamp(2.4rem, 5vw, 4rem)">{bundle.name}</h1>
+        <p>{bundle.description}</p>
+        <p class="product-price">{formatPrice(bundle.price, bundle.currency)}</p>
+        <a class="button button-primary gumroad-button" href={bundle.gumroadUrl} data-analytics-event="purchase_click" data-product-id={bundle.id}>Get this bundle <ArrowRight size={16} aria-hidden="true" /></a>
+        <p class="checkout-note">Checkout and digital file delivery are handled by Gumroad.</p>
+        <p class="digital-note"><strong>Digital download:</strong> this bundle includes crochet pattern files only; no finished items will be shipped.</p>
+      </div>
+    </div>
+
+    <section class="section-compact">
+      <p class="eyebrow">Inside the bundle</p>
+      <h2>Included patterns</h2>
+      <ProductGrid products={products} />
+    </section>
+  </div>
+</BaseLayout>

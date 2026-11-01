@@ -1,0 +1,47 @@
+---
+import ProductCard from './ProductCard.astro';
+const { products, categories = [], searchable = false } = Astro.props;
+---
+{searchable && products.length > 0 && (
+  <div class="catalog-tools" id="pattern-search" data-catalog-tools>
+    <label class="search-field">
+      <span class="sr-only">Search crochet patterns</span>
+      <input type="search" placeholder="Search patterns" autocomplete="off" data-catalog-search />
+    </label>
+    <label class="select-field">
+      <span class="sr-only">Filter by category</span>
+      <select data-catalog-category>
+        <option value="">All categories</option>
+        {categories.map((category) => <option value={category.slug}>{category.navLabel}</option>)}
+      </select>
+    </label>
+    <label class="select-field">
+      <span class="sr-only">Sort patterns</span>
+      <select data-catalog-sort>
+        <option value="featured">Featured first</option>
+        <option value="newest">Newest</option>
+        <option value="price-low">Price: low to high</option>
+        <option value="price-high">Price: high to low</option>
+      </select>
+    </label>
+    <p class="catalog-count" aria-live="polite" data-catalog-count></p>
+  </div>
+)}
+
+{products.length > 0 ? (
+  <>
+    <div class="product-grid" data-product-grid>
+      {products.map((product) => <ProductCard product={product} />)}
+    </div>
+    {searchable && <p class="no-results" data-catalog-empty hidden>No patterns match those filters. Try another search or category.</p>}
+  </>
+) : (
+  <div class="empty-state">
+    <span class="eyebrow">A little more time</span>
+    <h2>The pattern shelf is taking shape.</h2>
+    <p>New crochet patterns will appear here once their project details and Gumroad listings are ready. In the meantime, find a little inspiration in the journal.</p>
+    <a class="button button-secondary" href="/blog/">Read the journal</a>
+  </div>
+)}
+
+{searchable && products.length > 0 && <script src="../scripts/catalog.js"></script>}

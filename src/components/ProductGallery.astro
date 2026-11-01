@@ -1,0 +1,38 @@
+---
+const { images } = Astro.props;
+const first = images[0];
+---
+<div class="product-gallery" data-product-gallery>
+  <div class="product-gallery-main">
+    <img data-gallery-main src={first.src} alt={first.alt} width={first.width} height={first.height} fetchpriority="high" decoding="async" />
+    <a class="gallery-zoom" data-gallery-full href={first.src} target="_blank" rel="noreferrer">Open full image</a>
+  </div>
+  {images.length > 1 && (
+    <div class="gallery-thumbs" role="group" aria-label="Choose a product image">
+      {images.map((image, index) => (
+        <button class="gallery-thumb" type="button" data-gallery-thumb data-src={image.src} data-alt={image.alt} data-width={image.width} data-height={image.height} aria-label={'Show product image ' + (index + 1)} aria-pressed={index === 0 ? 'true' : 'false'}>
+          <img src={image.src} alt="" width={image.width} height={image.height} loading="lazy" decoding="async" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('[data-product-gallery]').forEach((gallery) => {
+    const main = gallery.querySelector('[data-gallery-main]');
+    const fullLink = gallery.querySelector('[data-gallery-full]');
+    const buttons = gallery.querySelectorAll('[data-gallery-thumb]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        main.src = button.dataset.src;
+        main.alt = button.dataset.alt;
+        main.width = Number(button.dataset.width);
+        main.height = Number(button.dataset.height);
+        fullLink.href = button.dataset.src;
+        buttons.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
+      });
+    });
+  });
+</script>

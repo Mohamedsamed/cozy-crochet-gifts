@@ -1,0 +1,14 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found" description="The page you were looking for could not be found." noindex={true}>
+  <section class="not-found">
+    <div>
+      <p class="eyebrow">A little detour</p>
+      <h1>That page wandered off.</h1>
+      <p>The link may have changed, or the pattern you’re looking for may not be published yet.</p>
+      <a class="button button-primary" href="/">Back to the home page <ArrowRight size={16} aria-hidden="true" /></a>
+    </div>
+  </section>
+</BaseLayout>

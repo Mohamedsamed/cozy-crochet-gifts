@@ -1,0 +1,10 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Before placing an order', paragraphs: ['Read the individual Gumroad product listing and checkout terms before purchase. This page is a draft and does not promise or deny a refund.'] },
+  { heading: 'Refund eligibility', paragraphs: ['Add the actual refund policy here, including any eligibility conditions, time limits, exceptions, and how a customer requests a review. Keep it consistent with the settings and terms on Gumroad.'] },
+  { heading: 'How to request help', paragraphs: ['Add the verified support email and the information a customer should include. Do not ask customers to send card details.'] },
+  { heading: 'Effective date', paragraphs: ['Add the date the final policy takes effect.'] },
+];
+---
+<LegalPage title="Refund Policy" description="Editable template for refund terms that must match each product listing and the business’s Gumroad settings." sections={sections} />

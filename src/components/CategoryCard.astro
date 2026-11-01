@@ -1,0 +1,14 @@
+---
+import { ArrowUpRight } from '@lucide/astro';
+const { category } = Astro.props;
+const image = category.image || category.products[0].images[0];
+---
+<a class="category-card" href={'/patterns/' + category.slug + '/'}>
+  <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
+  <span class="category-card-shade"></span>
+  <span class="category-card-copy">
+    <span class="eyebrow">{category.products.length} {category.products.length === 1 ? 'pattern' : 'patterns'}</span>
+    <strong>{category.title}</strong>
+    <span class="text-link">Explore <ArrowUpRight size={15} aria-hidden="true" /></span>
+  </span>
+</a>

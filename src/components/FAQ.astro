@@ -1,0 +1,12 @@
+---
+import { ChevronDown } from '@lucide/astro';
+const { items } = Astro.props;
+---
+<div class="faq-list">
+  {items.map((item) => (
+    <details class="faq-item">
+      <summary>{item.question}<ChevronDown size={18} aria-hidden="true" /></summary>
+      <div class="faq-answer"><p>{item.answer}</p></div>
+    </details>
+  ))}
+</div>

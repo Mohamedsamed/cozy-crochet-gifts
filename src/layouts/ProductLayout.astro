@@ -1,0 +1,15 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const { product, schemas = [] } = Astro.props;
+---
+<BaseLayout
+  title={product.name}
+  description={product.shortDescription}
+  image={product.images[0].src}
+  imageAlt={product.images[0].alt}
+  type="product"
+  includeGumroad={true}
+  schemas={schemas}
+>
+  <slot />
+</BaseLayout>

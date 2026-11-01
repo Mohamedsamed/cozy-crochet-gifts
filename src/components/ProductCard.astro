@@ -1,0 +1,29 @@
+---
+import { ArrowUpRight } from '@lucide/astro';
+import { formatPrice } from '../lib/store';
+const { product } = Astro.props;
+const image = product.images[0];
+---
+<article
+  class="product-card"
+  data-product-card
+  data-name={(product.name + ' ' + product.shortDescription).toLowerCase()}
+  data-category={product.category}
+  data-price={product.price}
+  data-date={product.publishedAt || ''}
+  data-featured={product.featured ? 'true' : 'false'}
+>
+  <a class="product-card-image" href={'/products/' + product.slug + '/'}>
+    <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
+    {product.badge && <span class="product-badge">{product.badge === 'new' ? 'New' : 'Bestseller'}</span>}
+  </a>
+  <div class="product-card-copy">
+    <div class="product-card-meta">
+      <span>{product.category.replaceAll('-', ' ')}</span>
+      <span>{formatPrice(product.price, product.currency)}</span>
+    </div>
+    <h3><a href={'/products/' + product.slug + '/'}>{product.name}</a></h3>
+    <p>{product.shortDescription}</p>
+    <a class="text-link" href={'/products/' + product.slug + '/'}>View pattern details <ArrowUpRight size={15} aria-hidden="true" /></a>
+  </div>
+</article>

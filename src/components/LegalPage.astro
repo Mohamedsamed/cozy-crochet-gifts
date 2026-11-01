@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+const { title, description, reviewed = false, sections = [] } = Astro.props;
+---
+<BaseLayout title={title} description={description} noindex={!reviewed}>
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: title }]} />
+    <div class="page-heading">
+      <p class="eyebrow">Store information</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+    {!reviewed && (
+      <div class="policy-template-notice" role="note">
+        <strong>Editable policy template.</strong> This page is a setup draft, not a statement of current business practices. Replace the prompts with verified details and review the finished policy before publishing or accepting orders.
+      </div>
+    )}
+    <article class="legal-content">
+      {sections.map((section) => (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {section.bullets && (
+            <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>
+          )}
+        </section>
+      ))}
+    </article>
+  </div>
+</BaseLayout>

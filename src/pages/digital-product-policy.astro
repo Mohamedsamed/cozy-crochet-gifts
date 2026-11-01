@@ -1,0 +1,10 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Digital product notice', paragraphs: ['Products in this shop are downloadable crochet pattern files. A finished crocheted object is not shipped.'] },
+  { heading: 'Checkout and delivery', paragraphs: ['Gumroad handles payment checkout and digital file delivery for listed products. State the exact delivery method and file access steps shown in the store’s current Gumroad account before launch.'] },
+  { heading: 'File details', paragraphs: ['Each listing should state the verified format, exact files included, language, and any relevant compatibility information. Do not promise formats or instructions that are not part of the actual product.'] },
+  { heading: 'Access support', paragraphs: ['Add the real support contact and steps for a customer who cannot locate a purchased file. Link to the relevant Gumroad customer help information.'] },
+];
+---
+<LegalPage title="Digital Product Policy" description="Information about digital crochet pattern files and Gumroad delivery, with editable prompts for product-specific terms." sections={sections} />

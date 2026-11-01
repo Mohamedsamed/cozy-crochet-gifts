@@ -1,0 +1,30 @@
+---
+import { ChevronRight } from '@lucide/astro';
+import { siteConfig } from '../config/site';
+const { items } = Astro.props;
+const breadcrumbSchema = siteConfig.publicSiteUrl ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: new URL(item.href || Astro.url.pathname, siteConfig.publicSiteUrl).toString(),
+  })),
+} : null;
+---
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {item.href && index < items.length - 1 ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+        {index < items.length - 1 && <ChevronRight size={14} aria-hidden="true" />}
+      </li>
+    ))}
+  </ol>
+</nav>
+{breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema).replaceAll('<', '\\u003c')} />}

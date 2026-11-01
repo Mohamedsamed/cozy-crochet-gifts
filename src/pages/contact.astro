@@ -1,0 +1,28 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+---
+<BaseLayout title="Contact Cozy Crochet Gifts" description="Find customer support guidance and the store contact details for Cozy Crochet Gifts." noindex={!siteConfig.contactEmail}>
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
+    <header class="page-heading">
+      <p class="eyebrow">We’re here to help</p>
+      <h1>Contact the shop.</h1>
+      <p>For a question about a pattern or an order, use the customer support details below. Checkout and digital file delivery are provided through Gumroad.</p>
+    </header>
+
+    <section class="contact-card">
+      <h2>Customer support</h2>
+      <p>Before getting in touch about an order, check the confirmation email and download information from Gumroad. For a pattern question, include the pattern name and the part of the instructions you’re asking about. Please do not send card or payment details by email.</p>
+      {siteConfig.contactEmail ? (
+        <a class="button button-primary" href={'mailto:' + siteConfig.contactEmail}>Email customer support <ArrowRight size={15} aria-hidden="true" /></a>
+      ) : (
+        <p class="contact-placeholder"><strong>Setup needed:</strong> add the real customer support email to <code>src/config/site.ts</code> before publishing this page.</p>
+      )}
+    </section>
+
+    <p class="muted">Need a quick answer? <a class="text-link" href="/faq/">Read the FAQ <ArrowRight size={14} aria-hidden="true" /></a></p>
+  </div>
+</BaseLayout>

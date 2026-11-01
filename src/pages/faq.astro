@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { siteConfig } from '../config/site';
+
+const groups = [
+  {
+    title: 'Digital products',
+    items: [
+      { question: 'What does the shop sell?', answer: 'Cozy Crochet Gifts offers downloadable crochet pattern files. Individual product pages describe the pattern and the files included.' },
+      { question: 'Will a finished crochet item be mailed to me?', answer: 'No. Product listings are for digital crochet patterns. No finished crocheted item will be shipped.' },
+      { question: 'How will I receive a purchased pattern?', answer: 'Gumroad handles checkout and digital delivery. After a successful purchase, Gumroad provides the receipt and access information for the files.' },
+    ],
+  },
+  {
+    title: 'Downloads',
+    items: [
+      { question: 'Which file formats are available?', answer: 'The file format is listed on each product page when it has been verified. Check the Gumroad listing before purchasing.' },
+      { question: 'I cannot find my download. What should I do?', answer: 'Start with the receipt and order information from Gumroad. If you still need help, use the customer support details on the Contact page.' },
+    ],
+  },
+  {
+    title: 'Crochet patterns',
+    items: [
+      { question: 'How do I know whether a pattern is right for me?', answer: 'Check its listed skill level, required knowledge, materials, language, and finished dimensions. A field is shown only when details for that pattern are available.' },
+      { question: 'Are patterns written in US or UK terms?', answer: 'The language and crochet terminology are shown on the individual listing when verified. If terminology is not specified, ask before purchasing.' },
+    ],
+  },
+  {
+    title: 'Payments',
+    items: [
+      { question: 'Where do I pay?', answer: 'Payment is processed through Gumroad. Cozy Crochet Gifts does not collect card details or provide a separate checkout form.' },
+    ],
+  },
+  {
+    title: 'Refunds',
+    items: [
+      { question: 'What is the refund policy?', answer: 'Refund terms need to match the current store and Gumroad product terms. Review the Refund Policy and the individual Gumroad listing before ordering.' },
+    ],
+  },
+  {
+    title: 'Commercial usage',
+    items: [
+      { question: 'Can I sell items made from a pattern?', answer: 'Usage permissions depend on the license for the specific pattern. Read its listing and included license before using a pattern commercially. No commercial rights are implied by this FAQ.' },
+      { question: 'Can I share or redistribute a purchased PDF?', answer: 'Digital file sharing and redistribution are governed by the license attached to the specific pattern. Please do not assume that redistribution is permitted.' },
+    ],
+  },
+  {
+    title: 'Technical support',
+    items: [
+      { question: 'How can I contact the shop?', answer: siteConfig.contactEmail ? 'Write to ' + siteConfig.contactEmail + ' for store support.' : 'The customer support email has not yet been configured. See the Contact page for setup information.' },
+    ],
+  },
+];
+---
+<BaseLayout title="Crochet pattern FAQ" description="Answers about digital crochet patterns, Gumroad checkout, downloads, skill levels, licensing, and support.">
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'FAQ' }]} />
+    <header class="page-heading">
+      <p class="eyebrow">Here to make things clearer</p>
+      <h1>Frequently asked questions.</h1>
+      <p>Answers about digital patterns, checkout, files, and how to find the information you need before you begin.</p>
+    </header>
+
+    <div class="legal-content">
+      {groups.map((group) => (
+        <section>
+          <h2>{group.title}</h2>
+          <div class="faq-list">
+            {group.items.map((item) => (
+              <details class="faq-item">
+                <summary>{item.question}<span aria-hidden="true">+</span></summary>
+                <div class="faq-answer"><p>{item.answer}</p></div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

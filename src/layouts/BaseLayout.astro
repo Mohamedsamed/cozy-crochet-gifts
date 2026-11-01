@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
+import { siteConfig } from '../config/site';
+
+const {
+  title,
+  description = siteConfig.description,
+  image = siteConfig.defaultImage,
+  imageAlt = 'Hand-crocheted bunny, textured blanket, and yarn in warm morning light.',
+  type = 'website',
+  noindex = false,
+  includeGumroad = false,
+  preloadImage = false,
+  schemas = [],
+} = Astro.props;
+
+const canonical = siteConfig.publicSiteUrl
+  ? new URL(Astro.url.pathname, siteConfig.publicSiteUrl).toString()
+  : undefined;
+const socialImage = siteConfig.publicSiteUrl
+  ? new URL(image, siteConfig.publicSiteUrl).toString()
+  : undefined;
+const organizationSchema = siteConfig.publicSiteUrl
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.publicSiteUrl,
+      logo: new URL('/favicon.svg', siteConfig.publicSiteUrl).toString(),
+    }
+  : null;
+const allSchemas = [...(organizationSchema ? [organizationSchema] : []), ...schemas];
+const shouldNoindex = noindex || !siteConfig.publicSiteUrl;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FAF8F3" />
+    <title>{title} · {siteConfig.name}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={shouldNoindex ? 'noindex, nofollow' : 'index, follow'} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {siteConfig.publicSiteUrl && <link rel="sitemap" href="/sitemap-index.xml" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {preloadImage && <link rel="preload" as="image" href="/images/home-crochet-still-life-1200.jpg" imagesrcset="/images/home-crochet-still-life-768.jpg 768w, /images/home-crochet-still-life-1200.jpg 1200w, /images/home-crochet-still-life-1536.jpg 1536w" imagesizes="100vw" />}
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title + ' · ' + siteConfig.name} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && <meta property="og:image:alt" content={imageAlt} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title + ' · ' + siteConfig.name} />
+    <meta name="twitter:description" content={description} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {includeGumroad && <link rel="dns-prefetch" href="https://gumroad.com" />}
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema).replaceAll('<', '\\u003c')} />
+    ))}
+    {(siteConfig.analyticsId || siteConfig.pinterestTagId) && <script is:inline type="module" src="/scripts/analytics.js"></script>}
+    {siteConfig.searchConsoleVerification && <meta name="google-site-verification" content={siteConfig.searchConsoleVerification} />}
+    {includeGumroad && <script is:inline async src="https://gumroad.com/js/gumroad.js"></script>}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <AnnouncementBar />
+    <Header />
+    <main id="main-content"><slot /></main>
+    <Footer />
+    <AnalyticsConsent analyticsId={siteConfig.analyticsId} pinterestTagId={siteConfig.pinterestTagId} />
+  </body>
+</html>

@@ -1,0 +1,11 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Business identity and contact', paragraphs: ['Add the legal business name, mailing address if required, and privacy contact email: [insert verified details].'] },
+  { heading: 'Information collected on this website', paragraphs: ['Document the information the site actually collects, including server logs, contact messages, analytics, and any optional features. Do not list data practices that are not enabled.', 'If Google Analytics or another service is configured, name the service, explain what it records, and describe how visitors can make a choice about it.'] },
+  { heading: 'Purchases and digital delivery', paragraphs: ['Describe Gumroad’s role in checkout and file delivery, and link to the current Gumroad privacy information. State which information Cozy Crochet Gifts receives from Gumroad, based on the actual account and workflow.'] },
+  { heading: 'Cookies, analytics, and sharing', paragraphs: ['List any cookies, local storage, pixels, or third-party requests that are active. Explain when they run and how consent is handled, if applicable.', 'Identify service providers that receive information and the purpose for each.'] },
+  { heading: 'Retention, rights, and updates', paragraphs: ['Add verified retention periods and a clear way to submit privacy requests. Describe the process and any regional rights that apply after the business has confirmed its obligations.', 'Add the date this policy becomes effective and how updates will be communicated.'] },
+];
+---
+<LegalPage title="Privacy Policy" description="Template for describing the real information practices used by the storefront and its checkout provider." sections={sections} />

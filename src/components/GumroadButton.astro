@@ -1,0 +1,15 @@
+---
+import { ArrowUpRight, LockKeyhole } from '@lucide/astro';
+const { href, label = 'Get the PDF pattern', productId } = Astro.props;
+---
+<div class="purchase-action" data-track-gumroad>
+  <a
+    class="button button-primary gumroad-button"
+    href={href}
+    data-product-id={productId}
+    data-analytics-event="purchase_click"
+  >
+    {label}<ArrowUpRight size={17} aria-hidden="true" />
+  </a>
+  <p class="checkout-note"><LockKeyhole size={14} aria-hidden="true" /> Checkout and file delivery are handled by Gumroad.</p>
+</div>

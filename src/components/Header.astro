@@ -1,0 +1,60 @@
+---
+import { ArrowUpRight, Search } from '@lucide/astro';
+import { activeCategories, publishedProducts } from '../lib/store';
+import { siteConfig } from '../config/site';
+---
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Cozy Crochet Gifts home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <path d="M20 5.5c2.2 0 3.1 4.2 3.1 7.4 2.2-2.4 5.4-5 7-3.4 1.6 1.6-1 4.8-3.4 7 3.2 0 7.4.9 7.4 3.1s-4.2 3.1-7.4 3.1c2.4 2.2 5 5.4 3.4 7-1.6 1.6-4.8-1-7-3.4 0 3.2-.9 7.4-3.1 7.4s-3.1-4.2-3.1-7.4c-2.2 2.4-5.4 5-7 3.4-1.6-1.6 1-4.8 3.4-7-3.2 0-7.4-.9-7.4-3.1s4.2-3.1 7.4-3.1c-2.4-2.2-5-5.4-3.4-7 1.6-1.6 4.8 1 7 3.4 0-3.2.9-7.4 3.1-7.4Z" fill="currentColor"/>
+          <circle cx="20" cy="19.6" r="3.1" fill="#FAF8F3"/>
+        </svg>
+      </span>
+      <span class="brand-name"><span>Cozy Crochet</span><span>Gifts</span></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="/shop/">Shop</a>
+      {activeCategories.filter((category) => category.slug === 'amigurumi').map((category) => (
+        <a href={'/patterns/' + category.slug + '/'}>{category.navLabel}</a>
+      ))}
+      {activeCategories.filter((category) => category.slug === 'crochet-gifts').map((category) => (
+        <a href={'/patterns/' + category.slug + '/'}>{category.navLabel}</a>
+      ))}
+      {activeCategories.filter((category) => category.slug === 'beginner').map((category) => (
+        <a href={'/patterns/' + category.slug + '/'}>Beginners</a>
+      ))}
+      <a href="/blog/">Journal</a>
+      <a href="/about/">About</a>
+    </nav>
+
+    <div class="header-actions">
+      {publishedProducts.length > 0 && <a class="icon-link" href="/shop/#pattern-search" aria-label="Search patterns">
+        <Search size={19} strokeWidth={1.7} aria-hidden="true" />
+      </a>}
+      <a class="header-cta" href="/shop/">Explore the shop <ArrowUpRight size={15} aria-hidden="true" /></a>
+      {siteConfig.publicSiteUrl && (
+        <a class="header-social-link" href={'https://www.pinterest.com/pin/create/button/?url=' + encodeURIComponent(siteConfig.publicSiteUrl)} target="_blank" rel="noreferrer">Save us <span class="sr-only">on Pinterest</span></a>
+      )}
+    </div>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation menu">
+        <span class="menu-open">Menu</span>
+        <span class="menu-close">Close</span>
+      </summary>
+      <nav aria-label="Mobile navigation">
+        <a href="/shop/">Shop all patterns</a>
+        {activeCategories.map((category) => (
+          <a href={'/patterns/' + category.slug + '/'}>{category.navLabel}</a>
+        ))}
+        <a href="/bundles/">Bundles</a>
+        <a href="/blog/">Journal</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </details>
+  </div>
+</header>

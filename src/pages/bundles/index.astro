@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { ArrowRight } from '@lucide/astro';
+import { publishedBundles, getBundleProducts, formatPrice } from '../../lib/store';
+---
+<BaseLayout title="Crochet pattern bundles" description="Browse curated digital crochet pattern bundles, including each pattern and the Gumroad listing details.">
+  <div class="page-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Bundles' }]} />
+    <header class="page-heading">
+      <p class="eyebrow">Made to go together</p>
+      <h1>Pattern bundles for a little more inspiration.</h1>
+      <p>See exactly which crochet patterns each collection includes, then visit its Gumroad listing for checkout and delivery details.</p>
+    </header>
+
+    {publishedBundles.length ? (
+      <div class="bundle-grid">
+        {publishedBundles.map((bundle) => {
+          const included = getBundleProducts(bundle.id);
+          return (
+            <article class="bundle-card">
+              <img src={bundle.image.src} alt={bundle.image.alt} width={bundle.image.width} height={bundle.image.height} loading="lazy" decoding="async" />
+              <div class="bundle-card-copy">
+                <p class="eyebrow">Digital pattern bundle</p>
+                <h2><a href={'/bundles/' + bundle.slug + '/'}>{bundle.name}</a></h2>
+                <p>{bundle.description}</p>
+                <p><strong>{formatPrice(bundle.price, bundle.currency)}</strong></p>
+                <ul class="bundle-includes">{included.map((product) => <li>{product.name}</li>)}</ul>
+                <a class="text-link" href={'/bundles/' + bundle.slug + '/'}>Explore the bundle <ArrowRight size={15} aria-hidden="true" /></a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="empty-state">
+        <p class="eyebrow">Thoughtfully collected</p>
+        <h2>Bundles are being put together.</h2>
+        <p>When bundles are available, this page will show their included patterns, preview images, price, and direct Gumroad checkout link.</p>
+        <a class="button button-secondary" href="/shop/">Explore the pattern shelf <ArrowRight size={16} aria-hidden="true" /></a>
+      </div>
+    )}
+
+    <p class="digital-note" style="margin-top: 28px"><strong>Digital download notice:</strong> bundle purchases are pattern files only. No finished crochet item will be shipped.</p>
+  </div>
+</BaseLayout>

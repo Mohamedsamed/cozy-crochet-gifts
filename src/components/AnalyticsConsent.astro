@@ -1,0 +1,15 @@
+---
+const { analyticsId, pinterestTagId } = Astro.props;
+---
+{(analyticsId || pinterestTagId) && (
+  <aside class="consent-banner" data-consent-banner data-analytics-id={analyticsId} data-pinterest-tag-id={pinterestTagId} hidden aria-label="Optional analytics and marketing tags">
+    <div>
+      <p class="eyebrow">Your privacy</p>
+      <p>Optional analytics and marketing tags help us understand visits and campaign activity. They stay off unless you choose to allow them.</p>
+    </div>
+    <div class="consent-actions">
+      <button class="button button-small button-secondary" type="button" data-consent-reject>Keep optional tags off</button>
+      <button class="button button-small button-primary" type="button" data-consent-accept>Allow optional tags</button>
+    </div>
+  </aside>
+)}

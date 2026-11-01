@@ -1,0 +1,11 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+const sections = [
+  { heading: 'Store operator', paragraphs: ['Add the legal business name, business location, and customer support contact: [insert verified details].'] },
+  { heading: 'Products and orders', paragraphs: ['Describe the digital pattern products offered and the exact order process through Gumroad. Explain that product details and included files are stated on each listing.', 'Set out how customers can ask questions about a product before purchase.'] },
+  { heading: 'Access and acceptable use', paragraphs: ['Describe the access terms for purchased digital files and refer to the license attached to each pattern. Do not create usage rights that are not granted by that product’s license.', 'Add the terms that apply to the storefront itself, account or website use, and any links to third-party services.'] },
+  { heading: 'Refunds, liability, and changes', paragraphs: ['Make this section consistent with the refund policy and the terms shown in Gumroad checkout. Add only limitations and legal provisions reviewed for the actual business and applicable law.', 'Add the governing law and dispute process only after confirming the business location and legal requirements.'] },
+  { heading: 'Effective date', paragraphs: ['Add the date these terms take effect and the process for notifying customers about material changes.'] },
+];
+---
+<LegalPage title="Terms" description="Editable terms template for the storefront, digital product listings, and customer orders." sections={sections} />
